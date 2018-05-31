@@ -1,0 +1,566 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DA5EA44020C007A500CA418D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5EA43F20C007A500CA418D /* AppDelegate.swift */; };
+		DA5EA44220C007A500CA418D /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5EA44120C007A500CA418D /* GameViewController.swift */; };
+		DA5EA44420C007A500CA418D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5EA44320C007A500CA418D /* Renderer.swift */; };
+		DA5EA44620C007A500CA418D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = DA5EA44520C007A500CA418D /* Shaders.metal */; };
+		DA5EA44920C007A500CA418D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA5EA44820C007A500CA418D /* Assets.xcassets */; };
+		DA5EA44C20C007A500CA418D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA5EA44A20C007A500CA418D /* Main.storyboard */; };
+		DA5EA45820C007A600CA418D /* ExploringMetalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5EA45720C007A600CA418D /* ExploringMetalTests.swift */; };
+		DA5EA46320C007A600CA418D /* ExploringMetalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5EA46220C007A600CA418D /* ExploringMetalUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DA5EA45420C007A600CA418D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA5EA43420C007A500CA418D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA5EA43B20C007A500CA418D;
+			remoteInfo = ExploringMetal;
+		};
+		DA5EA45F20C007A600CA418D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA5EA43420C007A500CA418D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA5EA43B20C007A500CA418D;
+			remoteInfo = ExploringMetal;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		DA5EA43C20C007A500CA418D /* ExploringMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ExploringMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA5EA43F20C007A500CA418D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA5EA44120C007A500CA418D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		DA5EA44320C007A500CA418D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		DA5EA44520C007A500CA418D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		DA5EA44720C007A500CA418D /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		DA5EA44820C007A500CA418D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DA5EA44B20C007A500CA418D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DA5EA44D20C007A500CA418D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA5EA44E20C007A500CA418D /* ExploringMetal.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ExploringMetal.entitlements; sourceTree = "<group>"; };
+		DA5EA45320C007A600CA418D /* ExploringMetalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExploringMetalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA5EA45720C007A600CA418D /* ExploringMetalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploringMetalTests.swift; sourceTree = "<group>"; };
+		DA5EA45920C007A600CA418D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA5EA45E20C007A600CA418D /* ExploringMetalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExploringMetalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA5EA46220C007A600CA418D /* ExploringMetalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploringMetalUITests.swift; sourceTree = "<group>"; };
+		DA5EA46420C007A600CA418D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DA5EA43920C007A500CA418D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5EA45020C007A600CA418D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5EA45B20C007A600CA418D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DA5EA43320C007A500CA418D = {
+			isa = PBXGroup;
+			children = (
+				DA5EA43E20C007A500CA418D /* ExploringMetal */,
+				DA5EA45620C007A600CA418D /* ExploringMetalTests */,
+				DA5EA46120C007A600CA418D /* ExploringMetalUITests */,
+				DA5EA43D20C007A500CA418D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DA5EA43D20C007A500CA418D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA5EA43C20C007A500CA418D /* ExploringMetal.app */,
+				DA5EA45320C007A600CA418D /* ExploringMetalTests.xctest */,
+				DA5EA45E20C007A600CA418D /* ExploringMetalUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DA5EA43E20C007A500CA418D /* ExploringMetal */ = {
+			isa = PBXGroup;
+			children = (
+				DA5EA43F20C007A500CA418D /* AppDelegate.swift */,
+				DA5EA44120C007A500CA418D /* GameViewController.swift */,
+				DA5EA44320C007A500CA418D /* Renderer.swift */,
+				DA5EA44520C007A500CA418D /* Shaders.metal */,
+				DA5EA44720C007A500CA418D /* ShaderTypes.h */,
+				DA5EA44820C007A500CA418D /* Assets.xcassets */,
+				DA5EA44A20C007A500CA418D /* Main.storyboard */,
+				DA5EA44D20C007A500CA418D /* Info.plist */,
+				DA5EA44E20C007A500CA418D /* ExploringMetal.entitlements */,
+			);
+			path = ExploringMetal;
+			sourceTree = "<group>";
+		};
+		DA5EA45620C007A600CA418D /* ExploringMetalTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA5EA45720C007A600CA418D /* ExploringMetalTests.swift */,
+				DA5EA45920C007A600CA418D /* Info.plist */,
+			);
+			path = ExploringMetalTests;
+			sourceTree = "<group>";
+		};
+		DA5EA46120C007A600CA418D /* ExploringMetalUITests */ = {
+			isa = PBXGroup;
+			children = (
+				DA5EA46220C007A600CA418D /* ExploringMetalUITests.swift */,
+				DA5EA46420C007A600CA418D /* Info.plist */,
+			);
+			path = ExploringMetalUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DA5EA43B20C007A500CA418D /* ExploringMetal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA5EA46720C007A600CA418D /* Build configuration list for PBXNativeTarget "ExploringMetal" */;
+			buildPhases = (
+				DA5EA43820C007A500CA418D /* Sources */,
+				DA5EA43920C007A500CA418D /* Frameworks */,
+				DA5EA43A20C007A500CA418D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ExploringMetal;
+			productName = ExploringMetal;
+			productReference = DA5EA43C20C007A500CA418D /* ExploringMetal.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DA5EA45220C007A600CA418D /* ExploringMetalTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA5EA46A20C007A600CA418D /* Build configuration list for PBXNativeTarget "ExploringMetalTests" */;
+			buildPhases = (
+				DA5EA44F20C007A600CA418D /* Sources */,
+				DA5EA45020C007A600CA418D /* Frameworks */,
+				DA5EA45120C007A600CA418D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA5EA45520C007A600CA418D /* PBXTargetDependency */,
+			);
+			name = ExploringMetalTests;
+			productName = ExploringMetalTests;
+			productReference = DA5EA45320C007A600CA418D /* ExploringMetalTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DA5EA45D20C007A600CA418D /* ExploringMetalUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA5EA46D20C007A600CA418D /* Build configuration list for PBXNativeTarget "ExploringMetalUITests" */;
+			buildPhases = (
+				DA5EA45A20C007A600CA418D /* Sources */,
+				DA5EA45B20C007A600CA418D /* Frameworks */,
+				DA5EA45C20C007A600CA418D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA5EA46020C007A600CA418D /* PBXTargetDependency */,
+			);
+			name = ExploringMetalUITests;
+			productName = ExploringMetalUITests;
+			productReference = DA5EA45E20C007A600CA418D /* ExploringMetalUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DA5EA43420C007A500CA418D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Adil Patel";
+				TargetAttributes = {
+					DA5EA43B20C007A500CA418D = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+					DA5EA45220C007A600CA418D = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DA5EA43B20C007A500CA418D;
+					};
+					DA5EA45D20C007A600CA418D = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+						TestTargetID = DA5EA43B20C007A500CA418D;
+					};
+				};
+			};
+			buildConfigurationList = DA5EA43720C007A500CA418D /* Build configuration list for PBXProject "ExploringMetal" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DA5EA43320C007A500CA418D;
+			productRefGroup = DA5EA43D20C007A500CA418D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DA5EA43B20C007A500CA418D /* ExploringMetal */,
+				DA5EA45220C007A600CA418D /* ExploringMetalTests */,
+				DA5EA45D20C007A600CA418D /* ExploringMetalUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DA5EA43A20C007A500CA418D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5EA44920C007A500CA418D /* Assets.xcassets in Resources */,
+				DA5EA44C20C007A500CA418D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5EA45120C007A600CA418D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5EA45C20C007A600CA418D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DA5EA43820C007A500CA418D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5EA44620C007A500CA418D /* Shaders.metal in Sources */,
+				DA5EA44220C007A500CA418D /* GameViewController.swift in Sources */,
+				DA5EA44420C007A500CA418D /* Renderer.swift in Sources */,
+				DA5EA44020C007A500CA418D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5EA44F20C007A600CA418D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5EA45820C007A600CA418D /* ExploringMetalTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA5EA45A20C007A600CA418D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA5EA46320C007A600CA418D /* ExploringMetalUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DA5EA45520C007A600CA418D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA5EA43B20C007A500CA418D /* ExploringMetal */;
+			targetProxy = DA5EA45420C007A600CA418D /* PBXContainerItemProxy */;
+		};
+		DA5EA46020C007A600CA418D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA5EA43B20C007A500CA418D /* ExploringMetal */;
+			targetProxy = DA5EA45F20C007A600CA418D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		DA5EA44A20C007A500CA418D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA5EA44B20C007A500CA418D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DA5EA46520C007A600CA418D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		DA5EA46620C007A600CA418D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+			};
+			name = Release;
+		};
+		DA5EA46820C007A600CA418D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ExploringMetal/ExploringMetal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SY5FFSAMLT;
+				INFOPLIST_FILE = ExploringMetal/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adilPatel.ExploringMetal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ExploringMetal/ShaderTypes.h;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Debug;
+		};
+		DA5EA46920C007A600CA418D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = ExploringMetal/ExploringMetal.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SY5FFSAMLT;
+				INFOPLIST_FILE = ExploringMetal/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adilPatel.ExploringMetal;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = ExploringMetal/ShaderTypes.h;
+				SWIFT_VERSION = 4.0;
+			};
+			name = Release;
+		};
+		DA5EA46B20C007A600CA418D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SY5FFSAMLT;
+				INFOPLIST_FILE = ExploringMetalTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adilPatel.ExploringMetalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExploringMetal.app/Contents/MacOS/ExploringMetal";
+			};
+			name = Debug;
+		};
+		DA5EA46C20C007A600CA418D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SY5FFSAMLT;
+				INFOPLIST_FILE = ExploringMetalTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adilPatel.ExploringMetalTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ExploringMetal.app/Contents/MacOS/ExploringMetal";
+			};
+			name = Release;
+		};
+		DA5EA46E20C007A600CA418D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SY5FFSAMLT;
+				INFOPLIST_FILE = ExploringMetalUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adilPatel.ExploringMetalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_TARGET_NAME = ExploringMetal;
+			};
+			name = Debug;
+		};
+		DA5EA46F20C007A600CA418D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = SY5FFSAMLT;
+				INFOPLIST_FILE = ExploringMetalUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adilPatel.ExploringMetalUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TEST_TARGET_NAME = ExploringMetal;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DA5EA43720C007A500CA418D /* Build configuration list for PBXProject "ExploringMetal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA5EA46520C007A600CA418D /* Debug */,
+				DA5EA46620C007A600CA418D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA5EA46720C007A600CA418D /* Build configuration list for PBXNativeTarget "ExploringMetal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA5EA46820C007A600CA418D /* Debug */,
+				DA5EA46920C007A600CA418D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA5EA46A20C007A600CA418D /* Build configuration list for PBXNativeTarget "ExploringMetalTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA5EA46B20C007A600CA418D /* Debug */,
+				DA5EA46C20C007A600CA418D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA5EA46D20C007A600CA418D /* Build configuration list for PBXNativeTarget "ExploringMetalUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA5EA46E20C007A600CA418D /* Debug */,
+				DA5EA46F20C007A600CA418D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DA5EA43420C007A500CA418D /* Project object */;
+}
