@@ -40,7 +40,6 @@
 		DA5EA44120C007A500CA418D /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		DA5EA44320C007A500CA418D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		DA5EA44520C007A500CA418D /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
-		DA5EA44720C007A500CA418D /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 		DA5EA44820C007A500CA418D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA5EA44B20C007A500CA418D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA5EA44D20C007A500CA418D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -51,6 +50,7 @@
 		DA5EA45E20C007A600CA418D /* ExploringMetalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExploringMetalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA5EA46220C007A600CA418D /* ExploringMetalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploringMetalUITests.swift; sourceTree = "<group>"; };
 		DA5EA46420C007A600CA418D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA73FB9420C66AE400B7571F /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,11 +105,11 @@
 				DA5EA44120C007A500CA418D /* GameViewController.swift */,
 				DA5EA44320C007A500CA418D /* Renderer.swift */,
 				DA5EA44520C007A500CA418D /* Shaders.metal */,
-				DA5EA44720C007A500CA418D /* ShaderTypes.h */,
 				DA5EA44820C007A500CA418D /* Assets.xcassets */,
 				DA5EA44A20C007A500CA418D /* Main.storyboard */,
 				DA5EA44D20C007A500CA418D /* Info.plist */,
 				DA5EA44E20C007A500CA418D /* ExploringMetal.entitlements */,
+				DA73FB9420C66AE400B7571F /* ShaderTypes.h */,
 			);
 			path = ExploringMetal;
 			sourceTree = "<group>";

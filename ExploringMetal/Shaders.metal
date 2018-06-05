@@ -11,44 +11,33 @@
 #include <metal_stdlib>
 #include <simd/simd.h>
 
-// Including header shared between this Metal shader code and Swift/C code executing Metal API commands
-#import "ShaderTypes.h"
-
 using namespace metal;
 
-typedef struct
-{
-    float3 position [[attribute(VertexAttributePosition)]];
-    float2 texCoord [[attribute(VertexAttributeTexcoord)]];
+// The structure that is fed into the vertex shader. We use packed data types to alleviate memory alignment
+// issues caused by the float2
+typedef struct {
+    packed_float2 position;
+    packed_float4 colour;
 } Vertex;
 
-typedef struct
-{
+// The output of the vertex shader, which will be fed into the fragment shader
+typedef struct {
     float4 position [[position]];
-    float2 texCoord;
-} ColorInOut;
+    float4 colour;
+} RasteriserData;
 
-vertex ColorInOut vertexShader(Vertex in [[stage_in]],
-                               constant Uniforms & uniforms [[ buffer(BufferIndexUniforms) ]])
-{
-    ColorInOut out;
+vertex RasteriserData helloVertexShader(uint vertexID [[vertex_id]],
+                                        constant Vertex *vertices [[buffer(0)]]) {
+    
+    RasteriserData out;
+    out.position = float4(0.0, 0.0, 0.0, 1.0);
+    out.position.xy = vertices[vertexID].position;
+    out.colour = vertices[vertexID].colour;
 
-    float4 position = float4(in.position, 1.0);
-    out.position = uniforms.projectionMatrix * uniforms.modelViewMatrix * position;
-    out.texCoord = in.texCoord;
-
+    // Both the colour and the clip space position will be interpolated in this data structure
     return out;
 }
 
-fragment float4 fragmentShader(ColorInOut in [[stage_in]],
-                               constant Uniforms & uniforms [[ buffer(BufferIndexUniforms) ]],
-                               texture2d<half> colorMap     [[ texture(TextureIndexColor) ]])
-{
-    constexpr sampler colorSampler(mip_filter::linear,
-                                   mag_filter::linear,
-                                   min_filter::linear);
-
-    half4 colorSample   = colorMap.sample(colorSampler, in.texCoord.xy);
-
-    return float4(colorSample);
+fragment float4 helloFragmentShader(RasteriserData in [[stage_in]]) {
+    return in.colour;
 }
