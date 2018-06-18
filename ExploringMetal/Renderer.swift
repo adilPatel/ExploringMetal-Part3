@@ -16,26 +16,125 @@ enum RendererError: Error {
     case badVertexDescriptor
 }
 
+struct Uniforms {
+    var modelViewMatrix: matrix_float4x4
+    var projectionMatrix: matrix_float4x4
+    var normalMatrix: matrix_float4x4
+}
+
 class Renderer: NSObject, MTKViewDelegate {
 
     // A handle to our device (which is the GPU)
     public let device: MTLDevice
     
-    // The Metal render pipeline state.
+    // The Metal render pipeline state
     var pipelineState: MTLRenderPipelineState!
+    
+    // The Metal depth stencil state
+    var depthState: MTLDepthStencilState!
     
     // The Metal command queue
     var commandQueue: MTLCommandQueue!
     
-    // The triangle information
-    //                             Vertices      Colours
-    let vertexArray: [Float32] = [ 0.5, -0.5,    1.0, 0.0, 0.0, 1.0,
-                                  -0.5, -0.5,    0.0, 1.0, 0.0, 1.0,
-                                   0.0,  0.5,    0.0, 0.0, 1.0, 1.0]
+    // Moves our shape to camera space
+    var modelViewMatrix = matrix_float4x4()
     
+    // As the name suggests, our projection matrix
+    var projectionMatrix = matrix_float4x4()
+    
+    // Holds the uniforms
+    var uniforms: Uniforms
+    
+    // The box information
+    let vertexArray: [Float] = [
+        
+        1.0, -2.0, 0.5, 1.0,      0.0, -1.0, 0.0, 0.0,
+        -1.0, -2.0, 0.5, 1.0,     0.0, -1.0, 0.0, 0.0,
+        -1.0, -2.0, -0.5, 1.0,    0.0, -1.0, 0.0, 0.0,
+        
+        1.0, -2.0, -0.5, 1.0,     0.0, -1.0, 0.0, 0.0,
+        1.0, -2.0, 0.5, 1.0,      0.0, -1.0, 0.0, 0.0,
+        -1.0, -2.0, -0.5, 1.0,    0.0, -1.0, 0.0, 0.0,
+        
+        1.0, 2.0, 0.5, 1.0,       1.0, 0.0, 0.0, 0.0,
+        1.0, -2.0, 0.5, 1.0,      1.0, 0.0, 0.0, 0.0,
+        1.0, -2.0, -0.5, 1.0,     1.0, 0.0, 0.0, 0.0,
+        
+        1.0, 2.0, -0.5, 1.0,      1.0, 0.0, 0.0, 0.0,
+        1.0, 2.0, 0.5, 1.0,       1.0, 0.0, 0.0, 0.0,
+        1.0, -2.0, -0.5, 1.0,     1.0, 0.0, 0.0, 0.0,
+        
+        -1.0, 2.0, 0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
+        1.0, 2.0, 0.5, 1.0,       0.0, 1.0, 0.0, 0.0,
+        1.0, 2.0, -0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
+        
+        -1.0, 2.0, -0.5, 1.0,     0.0, 1.0, 0.0, 0.0,
+        -1.0, 2.0, 0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
+        1.0, 2.0, -0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
+        
+        -1.0, -2.0, 0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
+        -1.0, 2.0, 0.5, 1.0,      -1.0, 0.0, 0.0, 0.0,
+        -1.0, 2.0, -0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
+        
+        -1.0, -2.0, -0.5, 1.0,    -1.0, 0.0, 0.0, 0.0,
+        -1.0, -2.0, 0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
+        -1.0, 2.0, -0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
+        
+        1.0, 2.0, 0.5, 1.0,       0.0, 0.0, 1.0, 0.0,
+        -1.0, 2.0, 0.5, 1.0,      0.0, 0.0, 1.0, 0.0,
+        -1.0, -2.0, 0.5, 1.0,     0.0, 0.0, 1.0, 0.0,
+        
+        -1.0, -2.0, 0.5, 1.0,     0.0, 0.0, 1.0, 0.0,
+        1.0, -2.0, 0.5, 1.0,      0.0, 0.0, 1.0, 0.0,
+        1.0, 2.0, 0.5, 1.0,       0.0, 0.0, 1.0, 0.0,
+        
+        1.0, -2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0,
+        -1.0, -2.0, -0.5, 1.0,    0.0, 0.0, -1.0, 0.0,
+        -1.0, 2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0,
+        
+        1.0, 2.0, -0.5, 1.0,      0.0, 0.0, -1.0, 0.0,
+        1.0, -2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0,
+        -1.0, 2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0
+        
+    ]
+    
+    // Will send our vertex array to Metal
+    var vertexBuffer: MTLBuffer!
     
     init?(metalKitView: MTKView) {
+        
         self.device = metalKitView.device!
+        
+        metalKitView.depthStencilPixelFormat = .depth32Float_stencil8
+        
+        let size = metalKitView.bounds.size
+        
+        // Create the modelview matrix, which is a simple series of translations and rotations
+        let translationMatrix = matrix4x4_translation(0.0, 0.0, -5.0)
+        
+        let rotationMatrix1 = matrix4x4_rotation(radians: .pi / 4.0, axis: vector_float3(1.0, 0.0, 0.0))
+        let rotationMatrix2 = matrix4x4_rotation(radians: .pi / 4.0, axis: vector_float3(0.0, 1.0, 0.0))
+        let rotationMatrix = rotationMatrix1 * rotationMatrix2
+
+        modelViewMatrix = translationMatrix * rotationMatrix
+
+        let normalMatrix = (modelViewMatrix.inverse).transpose
+        
+        // Now create the projection matrix
+        let aspect = Float(size.width) / Float(size.height)
+        projectionMatrix = matrix_perspective_right_hand(fovyRadians: radians_from_degrees(65),
+                                                         aspectRatio:aspect,
+                                                         nearZ: 0.1, farZ: 100.0)
+        
+        
+        uniforms = Uniforms(modelViewMatrix: modelViewMatrix,
+                            projectionMatrix: projectionMatrix,
+                            normalMatrix: normalMatrix)
+
+        // We'll package all our vertices in a vertex buffer
+        vertexBuffer = device.makeBuffer(bytes: vertexArray,
+                                         length: MemoryLayout<Float>.size*vertexArray.count,
+                                         options: .cpuCacheModeWriteCombined)
         
         // We're creating handles to the shaders...
         let library = device.makeDefaultLibrary()
@@ -47,13 +146,21 @@ class Renderer: NSObject, MTKViewDelegate {
         let pipelineDescriptor = MTLRenderPipelineDescriptor()
         pipelineDescriptor.vertexFunction = vertexFunction
         pipelineDescriptor.fragmentFunction = fragmentFunction
-        pipelineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+        pipelineDescriptor.colorAttachments[0].pixelFormat = metalKitView.colorPixelFormat
+        pipelineDescriptor.depthAttachmentPixelFormat = metalKitView.depthStencilPixelFormat
+        pipelineDescriptor.stencilAttachmentPixelFormat = metalKitView.depthStencilPixelFormat
         
         do {
             try pipelineState = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
         } catch let error {
             print("ERROR: Failed to create the render pipeline state with error:\n\(error)")
         }
+        
+        let depthStateDesciptor = MTLDepthStencilDescriptor()
+        depthStateDesciptor.depthCompareFunction = .less
+        depthStateDesciptor.isDepthWriteEnabled = true
+        guard let state = device.makeDepthStencilState(descriptor:depthStateDesciptor) else { return nil }
+        depthState = state
         
         // And of course... a command queue
         commandQueue = device.makeCommandQueue()
@@ -81,12 +188,17 @@ class Renderer: NSObject, MTKViewDelegate {
             renderPassDescriptor.colorAttachments[0].loadAction = .clear
             let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
             
+            // So first we take care of the vertex buffer
+            
             // Copy the data into a buffer and set the render pipeline state
-            renderEncoder?.setVertexBytes(vertexArray, length: MemoryLayout<Float32>.size * vertexArray.count, index: 0)
+            renderEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+            renderEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.size, index: 1)
             renderEncoder?.setRenderPipelineState(pipelineState)
+            renderEncoder?.setDepthStencilState(depthState)
             
             // Draw
-            renderEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
+            let vertexCount = vertexArray.count / 8
+            renderEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount)
             
             renderEncoder?.endEncoding()
             
@@ -103,8 +215,10 @@ class Renderer: NSObject, MTKViewDelegate {
     func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
         /// Respond to drawable size or orientation changes here
 
-        // let aspect = Float(size.width) / Float(size.height)
-        // projectionMatrix = matrix_perspective_right_hand(fovyRadians: radians_from_degrees(65), aspectRatio:aspect, nearZ: 0.1, farZ: 100.0)
+        let aspect = Float(size.width) / Float(size.height)
+        projectionMatrix = matrix_perspective_right_hand(fovyRadians: radians_from_degrees(65), aspectRatio:aspect, nearZ: 0.1, farZ: 100.0)
+        uniforms.projectionMatrix = projectionMatrix
+        
     }
 }
 
