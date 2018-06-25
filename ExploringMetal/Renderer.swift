@@ -19,7 +19,7 @@ enum RendererError: Error {
 struct Uniforms {
     var modelViewMatrix: matrix_float4x4
     var projectionMatrix: matrix_float4x4
-    var normalMatrix: matrix_float4x4
+    var normalMatrix: matrix_float3x3
 }
 
 class Renderer: NSObject, MTKViewDelegate {
@@ -28,13 +28,13 @@ class Renderer: NSObject, MTKViewDelegate {
     public let device: MTLDevice
     
     // The Metal render pipeline state
-    var pipelineState: MTLRenderPipelineState!
+    var pipelineState: MTLRenderPipelineState
     
     // The Metal depth stencil state
-    var depthState: MTLDepthStencilState!
+    var depthState: MTLDepthStencilState
     
     // The Metal command queue
-    var commandQueue: MTLCommandQueue!
+    let commandQueue: MTLCommandQueue
     
     // Moves our shape to camera space
     var modelViewMatrix = matrix_float4x4()
@@ -45,61 +45,20 @@ class Renderer: NSObject, MTKViewDelegate {
     // Holds the uniforms
     var uniforms: Uniforms
     
-    // The box information
-    let vertexArray: [Float] = [
-        
-        1.0, -2.0, 0.5, 1.0,      0.0, -1.0, 0.0, 0.0,
-        -1.0, -2.0, 0.5, 1.0,     0.0, -1.0, 0.0, 0.0,
-        -1.0, -2.0, -0.5, 1.0,    0.0, -1.0, 0.0, 0.0,
-        
-        1.0, -2.0, -0.5, 1.0,     0.0, -1.0, 0.0, 0.0,
-        1.0, -2.0, 0.5, 1.0,      0.0, -1.0, 0.0, 0.0,
-        -1.0, -2.0, -0.5, 1.0,    0.0, -1.0, 0.0, 0.0,
-        
-        1.0, 2.0, 0.5, 1.0,       1.0, 0.0, 0.0, 0.0,
-        1.0, -2.0, 0.5, 1.0,      1.0, 0.0, 0.0, 0.0,
-        1.0, -2.0, -0.5, 1.0,     1.0, 0.0, 0.0, 0.0,
-        
-        1.0, 2.0, -0.5, 1.0,      1.0, 0.0, 0.0, 0.0,
-        1.0, 2.0, 0.5, 1.0,       1.0, 0.0, 0.0, 0.0,
-        1.0, -2.0, -0.5, 1.0,     1.0, 0.0, 0.0, 0.0,
-        
-        -1.0, 2.0, 0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
-        1.0, 2.0, 0.5, 1.0,       0.0, 1.0, 0.0, 0.0,
-        1.0, 2.0, -0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
-        
-        -1.0, 2.0, -0.5, 1.0,     0.0, 1.0, 0.0, 0.0,
-        -1.0, 2.0, 0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
-        1.0, 2.0, -0.5, 1.0,      0.0, 1.0, 0.0, 0.0,
-        
-        -1.0, -2.0, 0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
-        -1.0, 2.0, 0.5, 1.0,      -1.0, 0.0, 0.0, 0.0,
-        -1.0, 2.0, -0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
-        
-        -1.0, -2.0, -0.5, 1.0,    -1.0, 0.0, 0.0, 0.0,
-        -1.0, -2.0, 0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
-        -1.0, 2.0, -0.5, 1.0,     -1.0, 0.0, 0.0, 0.0,
-        
-        1.0, 2.0, 0.5, 1.0,       0.0, 0.0, 1.0, 0.0,
-        -1.0, 2.0, 0.5, 1.0,      0.0, 0.0, 1.0, 0.0,
-        -1.0, -2.0, 0.5, 1.0,     0.0, 0.0, 1.0, 0.0,
-        
-        -1.0, -2.0, 0.5, 1.0,     0.0, 0.0, 1.0, 0.0,
-        1.0, -2.0, 0.5, 1.0,      0.0, 0.0, 1.0, 0.0,
-        1.0, 2.0, 0.5, 1.0,       0.0, 0.0, 1.0, 0.0,
-        
-        1.0, -2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0,
-        -1.0, -2.0, -0.5, 1.0,    0.0, 0.0, -1.0, 0.0,
-        -1.0, 2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0,
-        
-        1.0, 2.0, -0.5, 1.0,      0.0, 0.0, -1.0, 0.0,
-        1.0, -2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0,
-        -1.0, 2.0, -0.5, 1.0,     0.0, 0.0, -1.0, 0.0
-        
-    ]
-    
     // Will send our vertex array to Metal
     var vertexBuffer: MTLBuffer!
+    
+    // Will use to describe the polygons
+    var indexBuffer: MTLBuffer!
+    
+    // Contains data of the geometry
+    var subMesh: MTKSubmesh!
+    
+    // Self-explanatory
+    var sphereTexture: MTLTexture!
+    
+    // The texture sampler which will be passed on to Metal
+    var samplerState: MTLSamplerState?
     
     init?(metalKitView: MTKView) {
         
@@ -111,18 +70,14 @@ class Renderer: NSObject, MTKViewDelegate {
         
         // Create the modelview matrix, which is a simple series of translations and rotations
         let translationMatrix = matrix4x4_translation(0.0, 0.0, -5.0)
+        let rotationMatrix = matrix4x4_rotation(radians: .pi / 2.0, axis: vector_float3(0.0, 1.0, 0.0))
+        self.modelViewMatrix = translationMatrix * rotationMatrix
         
-        let rotationMatrix1 = matrix4x4_rotation(radians: .pi / 4.0, axis: vector_float3(1.0, 0.0, 0.0))
-        let rotationMatrix2 = matrix4x4_rotation(radians: .pi / 4.0, axis: vector_float3(0.0, 1.0, 0.0))
-        let rotationMatrix = rotationMatrix1 * rotationMatrix2
-
-        modelViewMatrix = translationMatrix * rotationMatrix
-
-        let normalMatrix = (modelViewMatrix.inverse).transpose
+        let normalMatrix = makeNormalMatrix(inMatrix: modelViewMatrix)
         
         // Now create the projection matrix
         let aspect = Float(size.width) / Float(size.height)
-        projectionMatrix = matrix_perspective_right_hand(fovyRadians: radians_from_degrees(65),
+        self.projectionMatrix = matrix_perspective_right_hand(fovyRadians: radians_from_degrees(65),
                                                          aspectRatio:aspect,
                                                          nearZ: 0.1, farZ: 100.0)
         
@@ -130,11 +85,22 @@ class Renderer: NSObject, MTKViewDelegate {
         uniforms = Uniforms(modelViewMatrix: modelViewMatrix,
                             projectionMatrix: projectionMatrix,
                             normalMatrix: normalMatrix)
+        
+        let vertexDescriptor = makeVertexDescriptor()
+        
+        // Create the box in a more elegant and procedural manner
+        let mesh: MTKMesh
+        
+        do {
+            mesh = try makeMesh(device: self.device, vertexDescriptor: vertexDescriptor)
+            self.vertexBuffer = mesh.vertexBuffers[0].buffer
+            self.subMesh = mesh.submeshes[0]
+            self.indexBuffer = subMesh.indexBuffer.buffer
+        } catch {
+            print("ERROR: Unable to create mesh.  Error info: \(error)")
+        }
+        
 
-        // We'll package all our vertices in a vertex buffer
-        vertexBuffer = device.makeBuffer(bytes: vertexArray,
-                                         length: MemoryLayout<Float>.size*vertexArray.count,
-                                         options: .cpuCacheModeWriteCombined)
         
         // We're creating handles to the shaders...
         let library = device.makeDefaultLibrary()
@@ -149,24 +115,36 @@ class Renderer: NSObject, MTKViewDelegate {
         pipelineDescriptor.colorAttachments[0].pixelFormat = metalKitView.colorPixelFormat
         pipelineDescriptor.depthAttachmentPixelFormat = metalKitView.depthStencilPixelFormat
         pipelineDescriptor.stencilAttachmentPixelFormat = metalKitView.depthStencilPixelFormat
+        pipelineDescriptor.vertexDescriptor = vertexDescriptor
         
         do {
-            try pipelineState = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
+            try self.pipelineState = device.makeRenderPipelineState(descriptor: pipelineDescriptor)
         } catch let error {
             print("ERROR: Failed to create the render pipeline state with error:\n\(error)")
+            return nil
         }
         
+        // Depth testing
         let depthStateDesciptor = MTLDepthStencilDescriptor()
         depthStateDesciptor.depthCompareFunction = .less
         depthStateDesciptor.isDepthWriteEnabled = true
         guard let state = device.makeDepthStencilState(descriptor:depthStateDesciptor) else { return nil }
-        depthState = state
+        self.depthState = state
+        
+        do {
+            self.sphereTexture = try createTexture(device: device, assetName: "Atlas", assetExtension: "jpg")
+        } catch {
+            print("ERROR: Failed to load texture with error:\n\(error)")
+        }
+        
+       self.samplerState = createSampler(device: device)
         
         // And of course... a command queue
-        commandQueue = device.makeCommandQueue()
+        self.commandQueue = self.device.makeCommandQueue()!
         
         super.init()
 
+        
     }
 
 
@@ -188,17 +166,24 @@ class Renderer: NSObject, MTKViewDelegate {
             renderPassDescriptor.colorAttachments[0].loadAction = .clear
             let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
             
-            // So first we take care of the vertex buffer
             
             // Copy the data into a buffer and set the render pipeline state
             renderEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
             renderEncoder?.setVertexBytes(&uniforms, length: MemoryLayout<Uniforms>.size, index: 1)
             renderEncoder?.setRenderPipelineState(pipelineState)
             renderEncoder?.setDepthStencilState(depthState)
+            renderEncoder?.setFragmentTexture(sphereTexture, index: 0)
+            renderEncoder?.setFragmentSamplerState(samplerState, index: 0)
             
-            // Draw
-            let vertexCount = vertexArray.count / 8
-            renderEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertexCount)
+            let primitiveType = self.subMesh.primitiveType
+            let indexCount = self.subMesh.indexCount
+            let indexType  = self.subMesh.indexType
+            
+            renderEncoder?.drawIndexedPrimitives(type: primitiveType,
+                                                 indexCount: indexCount,
+                                                 indexType: indexType,
+                                                 indexBuffer: self.indexBuffer,
+                                                 indexBufferOffset: 0)
             
             renderEncoder?.endEncoding()
             
@@ -220,9 +205,108 @@ class Renderer: NSObject, MTKViewDelegate {
         uniforms.projectionMatrix = projectionMatrix
         
     }
+    
+    
+}
+
+func createSampler(device: MTLDevice) -> MTLSamplerState? {
+    
+    // Configure the sampler
+    let samplerDescriptor = MTLSamplerDescriptor()
+    samplerDescriptor.sAddressMode = .repeat
+    samplerDescriptor.tAddressMode = .repeat
+    samplerDescriptor.minFilter = .nearest
+    samplerDescriptor.magFilter = .linear
+    
+    // We could've used a bilinear filter for minification, but it fails when the pixel
+    // covers more than 4 texels. This is because bilinear filters blend four texels
+    
+    return device.makeSamplerState(descriptor: samplerDescriptor)
+    
+}
+
+func createTexture(device: MTLDevice, assetName: String, assetExtension: String) throws -> MTLTexture? {
+    
+    // Here we use MTKTextureLoader to handle our texture loading
+    let textureLoader = MTKTextureLoader(device: device)
+    let tempPath = Bundle.main.path(forResource: assetName, ofType: assetExtension)
+    
+    let textureOptions = [MTKTextureLoader.Option.origin : MTKTextureLoader.Origin.topLeft]
+    if let path = tempPath {
+        let url = URL(fileURLWithPath: path)
+        return try textureLoader.newTexture(URL: url, options: textureOptions)
+        
+    } else {
+        return nil
+    }
+    
+}
+
+func makeVertexDescriptor() -> MTLVertexDescriptor {
+    // Create the vertex descriptor first...
+    let vertexDescriptor = MTLVertexDescriptor()
+    
+    // Position
+    vertexDescriptor.attributes[0].format = .float3
+    vertexDescriptor.attributes[0].offset = 0 // Three floats causes 12 bytes of offset!
+    vertexDescriptor.attributes[0].bufferIndex = 0
+    
+    // Normal
+    vertexDescriptor.attributes[1].format = .float3
+    vertexDescriptor.attributes[1].offset = 12 // This value is cumulative!
+    vertexDescriptor.attributes[1].bufferIndex = 0
+    
+    // Texcoord
+    vertexDescriptor.attributes[2].format = .float2
+    vertexDescriptor.attributes[2].offset = 24
+    vertexDescriptor.attributes[2].bufferIndex = 0
+    
+    // Interleave them
+    vertexDescriptor.layouts[0].stride = 32
+    vertexDescriptor.layouts[0].stepRate = 1
+    vertexDescriptor.layouts[0].stepFunction = .perVertex
+    
+    return vertexDescriptor
+}
+
+func makeMesh(device: MTLDevice, vertexDescriptor: MTLVertexDescriptor) throws -> MTKMesh {
+    
+    let allocator = MTKMeshBufferAllocator(device: device)
+    
+    let mdlMesh = MDLMesh(sphereWithExtent: vector_float3(2.0, 2.0, 2.0),
+                          segments: vector_uint2(50, 50),
+                          inwardNormals: false,
+                          geometryType: .triangles,
+                          allocator: allocator)
+    
+    
+    let mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(vertexDescriptor)
+    
+    guard let attributes = mdlVertexDescriptor.attributes as? [MDLVertexAttribute] else {
+        throw RendererError.badVertexDescriptor
+    }
+    attributes[0].name = MDLVertexAttributePosition
+    attributes[1].name = MDLVertexAttributeNormal
+    attributes[2].name = MDLVertexAttributeTextureCoordinate
+    
+    mdlMesh.vertexDescriptor = mdlVertexDescriptor
+    
+    return try MTKMesh(mesh: mdlMesh, device: device)
+    
+}
+
+func makeNormalMatrix(inMatrix: matrix_float4x4) -> matrix_float3x3 {
+    let (inCol1, inCol2, inCol3, _) = inMatrix.columns
+    let row1 = vector_float3(inCol1[0], inCol2[0], inCol3[0])
+    let row2 = vector_float3(inCol1[1], inCol2[1], inCol3[1])
+    let row3 = vector_float3(inCol1[2], inCol2[2], inCol3[2])
+    
+    let upperLeft = matrix_from_rows(row1, row2, row3)
+    return (upperLeft.inverse).transpose
 }
 
 // Generic matrix math utility functions
+
 func matrix4x4_rotation(radians: Float, axis: float3) -> matrix_float4x4 {
     let unitAxis = normalize(axis)
     let ct = cosf(radians)
